@@ -1,7 +1,8 @@
 package com.controllers;
 
-import com.models.User;
-import com.service.LoginService;
+import com.models.StudentData;
+import com.service.DatabaseConnection;
+import com.service.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,11 +16,13 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response){
 
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String snumber = request.getParameter("snumber");
+        String sname = request.getParameter("sname");
+        int gpa = request.getIntHeader("gpa");
 
-        LoginService ls = new LoginService();
-        User loggedInUser = ls.getUser(email, password);
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        StudentService ls = new StudentService(databaseConnection.getDatabaseConnection());
+        StudentData loggedInUser = ls.getUser(snumber, sname, gpa);
 
         ModelAndView mv =  new ModelAndView();
         mv.setViewName("/display");

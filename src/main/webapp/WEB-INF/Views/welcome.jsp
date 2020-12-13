@@ -8,17 +8,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Welcome Page</title>
+    <title>Add an Entry</title>
 </head>
 
 
 <body>
 <form action="/login" method="post">
-    Email
-    <input type="text" name="email"> <br>
+    <h1>Add an Entry</h1>
+    Student Number
+    <input type="text" name="snumber"> <br>
 
-    Password
-    <input type="password" name="password"> <br>
+    Student Name
+    <input type="text" name="sname"> <br>
+
+   Student GPA
+    <input type="number" name="gpa"> <br>
+
 
     <input type="submit">
 </form>

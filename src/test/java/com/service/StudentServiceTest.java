@@ -1,7 +1,9 @@
 package com.service;
 
-import com.models.User;
 
+
+import com.models.StudentData;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -9,24 +11,21 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import com.service.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-class LoginServiceTest
-
+class DAOImplementsTest
 {
     @InjectMocks
-    private LoginService loginService;
+    private DAOImplementation daoImplements;
 
     @Mock
     private Connection connection;
@@ -38,30 +37,26 @@ class LoginServiceTest
     private PreparedStatement preparedStatement;
 
     @Mock
-    private DatabaseConnection databaseConnection;
+    private DatabaseConnection connection1;
 
-    User user;
-
+    StudentData user;
 
     @BeforeEach
-
     public void Setup() throws SQLException, ClassNotFoundException
     {
         MockitoAnnotations.initMocks(this);
         when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(databaseConnection.getDatabaseConnection()).thenReturn(connection);
-        user = new User("Rav","Kaur","rav.com","rav123","user","1234566",45);
+        when(connection1()).thenReturn(connection);
+        user=new User("101","food");
     }
 
     @Test
-    void getUser() throws SQLException
+    void addUser() throws SQLException, ClassNotFoundException
     {
-
-        when(connection.prepareStatement(" select * from users where email = ? and password = ? ")).thenReturn(preparedStatement);
-        loginService.getUser(user.getEmail(),user.getPassword());
-        verify(preparedStatement).executeQuery();
-
+        when(connection.prepareStatement("Insert Into User (username, `password`) Values ( ?, ?)")).thenReturn(preparedStatement);
+        daoImplements.(user);
+        verify(preparedStatement).executeUpdate();
 
     }
-}
 
+}
